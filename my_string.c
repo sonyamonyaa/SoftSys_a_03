@@ -8,12 +8,12 @@ int alphabetic(char ch){
 
 void inputTxt(char *text)
 {
-    printf("please enter your txt");
+    printf("please enter your txt"); //will fuck up the tester so delete after dbg
 
     int i = 0;
     char ch = getchar();
 
-    while ((ch != '\n' || ch != ' ' || ch != '\t') && i < TXT)
+    while ((ch != '~') && i < TXT)
     {
         text[i] = ch;
         i++;
@@ -24,7 +24,7 @@ void inputTxt(char *text)
 
 void inputWord(char *word)
 {
-    printf("please enter a word");
+    printf("please enter a word"); //will fuck up the tester so delete after dbg
 
     int i = 0;
     char ch = getchar();
