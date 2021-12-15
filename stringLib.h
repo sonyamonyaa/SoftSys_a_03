@@ -6,7 +6,7 @@
     #define WORD 30
 
     int gimatricEquals(char* s1, char* s2);
-    int abatashEquals(char* s1, char* s2);
+    int atbashEquals(char* s1, char* s2);
     int anagramEquals(char* s1, char* s2);
     
    

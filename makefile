@@ -5,19 +5,19 @@ OBJ= main.o my_string.o
 
 all: stringProg
 
-connections: main.o libclass.a
-		$(CC) $(FLAGS) -o stringProg main.o libclass.a
+stringProg: main.o stringLib.a
+		$(CC) $(FLAGS) -o stringProg main.o stringLib.a
 
-libclass.a: $(OBJ)
-		$(AR) -rcs libclass.a $(OBJ)
+stringLib.a: $(OBJ)
+		$(AR) -rcs stringLib.a $(OBJ)
 
 main.o: main.c stringLib.h
 		$(CC) $(FLAGS) -c main.c
 
-my_mat.o: my_string.c stringLib.h
-		$(CC) $(FLAGS) -c my_mat.c
+my_string.o: my_string.c stringLib.h
+		$(CC) $(FLAGS) -c my_string.c
 
 .PHONY: clean all
 
 clean:
-	rm -f *.o *.a *.so connections
+	rm -f *.o *.a *.so stringProg
