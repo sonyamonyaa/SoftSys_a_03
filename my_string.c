@@ -1,8 +1,11 @@
+#include "stringLib.h"
+
 int gimatricEquals(char* s1, char* s2){
 
 }
 
 int abatashEquals(char* s1, char* s2){
+    /* should be assist func
     if( char >= 'a' && char <= 'z'){
         new char = z - char mod a;
     }
@@ -11,9 +14,11 @@ int abatashEquals(char* s1, char* s2){
     }
 
     return new char
+     */
 }
 
 int anagramEquals(char* s1, char* s2){
+    /* should be assist func
     if( char >= 'a' && char <= 'z'){
         val = char - a + 1;
     }
@@ -21,4 +26,5 @@ int anagramEquals(char* s1, char* s2){
     if( char >= 'A' && char <= 'Z'){
         val = char - A + 1;
     }
+     */
 }
