@@ -1,9 +1,4 @@
-#define TXT 1024 //256?
-#define WORD 30
-// #define UP_A 00 
-// #define UP_Z 00
-// #define LOW_A 00
-// #define LOW_Z 00
+
 
 /*
 atbash char
