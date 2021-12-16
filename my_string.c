@@ -63,15 +63,23 @@ int gimatricVal(char ch)
     return val;
 }
 
-int gimatricEquals(char *s1, char *s2)
+bool gotGim = false;
+int sumWord = 0;
+
+bool gimatricEquals(char *s1, char *s2)
 {
     // get the words gimatric Value
     // scan the text, print when there's an equal word
-    int sum = 0;
-    for (int i = 0; s1[i] != '\0'; i++)
+    int sum;
+    if (!gotGim)
     {
-        sum += gimatricVal(s1[i]);
+        for (int i = 0; s1[i] != '\0'; i++)
+        {
+            sumWord += gimatricVal(s1[i]);
+        }
+        gotGim = true;
     }
+    sum = sumWord;
     for (int i = 0; s2[i] != '\0'; i++)
     {
         sum -= gimatricVal(s2[i]);
@@ -171,14 +179,14 @@ bool anagramEquals(char *s1, char *s2)
     // sort both strings to temps
     if (!isSorted)
     {
-        strcpy(s1,sortedWord);
+        strcpy(s1, sortedWord);
         sort(sortedWord);
         isSorted = true;
     }
-    char* temp;
-    strcpy(s2,temp);
+    char *temp;
+    strcpy(s2, temp);
     sort(temp);
-    
+
     // if equals
-    return strcmp(sortedWord,temp) == 0;
+    return strcmp(sortedWord, temp) == 0;
 }
