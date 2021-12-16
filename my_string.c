@@ -40,15 +40,6 @@ void inputWord(char *word)
     word[i] = '\0';
 }
 
-char atbashChar(char ch)
-{
-    if (ch >= 'a' && ch <= 'z')
-        ch = ('z' - ch) + 'a';
-    if (ch >= 'A' && ch <= 'Z')
-        ch = ('Z' - ch) + 'A';
-    return ch;
-}
-
 int gimatricVal(char ch)
 {
     int val = 0;
@@ -88,29 +79,78 @@ bool gimatricEquals(char *s1, char *s2)
     return sum == 0;
 }
 
-int abatashEquals(char *s1, char *s2)
+char atbashChar(char ch)
+{
+    if (ch >= 'a' && ch <= 'z')
+        ch = ('z' - ch) + 'a';
+    if (ch >= 'A' && ch <= 'Z')
+        ch = ('Z' - ch) + 'A';
+    return ch;
+}
+
+char* abtash(char* word){
+    int l = strlen(word);
+    char ans[l];
+
+    for (short i = 0; i < word; i++)
+    {
+        ans[i] = atbashChar(word[i]);
+    }
+
+    return &ans[0];    
+}
+
+char* invertedAbatash(char* word){
+    int l = strlen(word);
+    char ans[l];
+
+    for (short i = 0; i < word; i++)
+    {
+        ans[l-1 -i] = atbashChar(word[i]);
+    }
+
+    return &ans[0];    
+}
+
+void printAbatashEquals(char *txt, char *word)
 {
     // get new word in atbash and its reverse
     // scan the text and print any similiar ones
     // ASUMES CLEAN WORDS! (we wrote a function for it)
 
-    int belongedChars = 0, i, j;
+    
+    if (txt == NULL || txt[0] == '\0'){return;}
 
-    for (i = 0, j = 0; s1[i] != '\0' && s2[j] != '\0'; j++)
+    int i = 0, j = 0, l = strlen(txt);
+    char* abword = abtash(word), inv_abword = invertedAbatash(word);
+    int wl = strlen(abword);
+
+    while (j < l)
     {
-        if (s1[i] == atbashChar(s2[i]))
+        int currl = 0;
+        while (currl != wl)
         {
+            if(alphabetic(txt[j])){
 
-            belongedChars++;
-            i++;
+                if (txt[j] == abword[currl]){
+                    j++;
+                    currl++;
+                }else{i = j; break;}
+
+            }else{
+                j++;
+            }
         }
-        else
-        {
-            return 0;
+        if (i != j){ 
+            for (short k = i; k <= j; k++)
+            {
+                printf("%c", txt[k]);
+            }
+            printf("%c", '~');
         }
+
+        i = j;
     }
-
-    return belongedChars == i - 1;
 }
 
 char *cleanWord(char *str)
