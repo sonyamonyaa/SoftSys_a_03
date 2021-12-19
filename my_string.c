@@ -10,32 +10,34 @@ int alphabetic(char ch)
 
 void inputTxt(char *text)
 {
-    printf("please enter your txt"); // will fuck up the tester so delete after dbg
+    //printf("please enter your txt"); // will fuck up the tester so delete after dbg
 
     int i = 0;
-    char ch = getchar();
+    char ch;
+    scanf("%c" , &ch);
 
-    while ((ch != '~') && i < TXT)
+    while ((ch != '~') && i < TXT-1)
     {
         text[i] = ch;
         i++;
-        ch = getchar();
+        scanf("%c" , &ch);;
     }
     text[i] = '\0';
 }
 
 void inputWord(char *word)
 {
-    printf("please enter a word"); // will fuck up the tester so delete after dbg
+    //printf("please enter a word"); // will fuck up the tester so delete after dbg
 
     int i = 0;
-    char ch = getchar();
+    char ch;
+    scanf("%c" , &ch);
 
-    while ((ch != '\n' || ch != ' ' || ch != '\t') && i < WORD)
+    while ((ch != '\n' && ch != ' ' && ch != '\t') && i < WORD-1)
     {
         word[i] = ch;
         i++;
-        ch = getchar();
+        scanf("%c" , &ch);
     }
     word[i] = '\0';
 }
@@ -88,29 +90,56 @@ char atbashChar(char ch)
     return ch;
 }
 
-char* abtash(char* word){
+void abtash(char* word){
     int l = strlen(word);
-    char ans[l];
 
-    for (short i = 0; i < word; i++)
+    for (short i = 0; i < l; i++)
     {
-        ans[i] = atbashChar(word[i]);
+        word[i] = atbashChar(word[i]);
     }
 
-    return &ans[0];    
 }
 
-char* invertedAbatash(char* word){
+void invertedAbatash(char* word){
     int l = strlen(word);
-    char ans[l];
-
-    for (short i = 0; i < word; i++)
+    for (short i = 0; i < l; i++)
     {
-        ans[l-1 -i] = atbashChar(word[i]);
-    }
-
-    return &ans[0];    
+        word[l-1 -i] = atbashChar(word[i]);
+    }    
 }
+
+// char *cleanWord(char *str)
+// {
+//     if (strlen(str) == 0)
+//     {
+//         return str;
+//     }
+//     int len = 1, i = 0;
+//     while ((str[i] != '\n' && str[i] != ' ' && str[i] != '\t') && str[i] != '\0')
+//     {
+//         i++;
+//     }
+//     int j = i;
+//     while (str[j] != '\0')
+//     {
+//         if (str[j] != ' ')
+//         {
+//             len++;
+//         }
+//         j++;
+//     }
+//     char new[len];
+//     for (j = 0; j < len - 1; j++)
+//     {
+//         if (alphabetic(str[i]))
+//         {
+//             new[j] = str[i];
+//             i++;
+//         }
+//     }
+//     new[len] = '\0';
+//     return &new[0];
+// }
 
 void printAbatashEquals(char *txt, char *word)
 {
@@ -122,9 +151,13 @@ void printAbatashEquals(char *txt, char *word)
     if (txt == NULL || txt[0] == '\0'){return;}
 
     int i = 0, j = 0, l = strlen(txt);
-    char* abword = abtash(word), inv_abword = invertedAbatash(word);
+    char abword[WORD] ,  inv_abword[WORD];
+    strcpy(abword,word);
+    strcpy(inv_abword,word);
+    abtash(abword); 
+    invertedAbatash(inv_abword);
     int wl = strlen(abword);
-
+    bool first = true;
     while (j < l)
     {
         int currl = 0;
@@ -141,55 +174,21 @@ void printAbatashEquals(char *txt, char *word)
                 j++;
             }
         }
-        if (i != j){ 
+        if (i != j){
+            if(!first)
+                printf("%c", '~');
             for (short k = i; k <= j; k++)
             {
                 printf("%c", txt[k]);
             }
-            printf("%c", '~');
+            if(first)
+                first = false;
         }
 
         i = j;
     }
 }
-
-char *cleanWord(char *str)
-{
-    if (strlen(str) == 0)
-    {
-        return;
-    }
-
-    int len = 1, i = 0;
-
-    while ((str[i] != '\n' && str[i] != ' ' && str[i] != '\t') && str[i] != '\0')
-    {
-        i++;
-    }
-    int j = i;
-    while (str[j] != '\0')
-    {
-        if (str[j] != ' ')
-        {
-            len++;
-        }
-        j++;
-    }
-
-    char new[len];
-    for (j = 0; j < len - 1; j++)
-    {
-        if (alphabetic(str[i]))
-        {
-            new[j] = str[i];
-            i++;
-        }
-    }
-    new[len] = '\0';
-
-    return &new[0];
-}
-
+//anagram
 bool isSorted = false;
 char *sortedWord;
 
@@ -219,12 +218,12 @@ bool anagramEquals(char *s1, char *s2)
     // sort both strings to temps
     if (!isSorted)
     {
-        strcpy(s1, sortedWord);
+        strcpy(sortedWord,s1);
         sort(sortedWord);
         isSorted = true;
     }
-    char *temp;
-    strcpy(s2, temp);
+    char temp [sizeof(s2)];
+    strcpy(temp,s2);
     sort(temp);
 
     // if equals
