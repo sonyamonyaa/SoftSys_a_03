@@ -201,7 +201,7 @@ void printAtbashEquals(char txt[], char word[]) {
         }
 
         l2 = f2;
-        while(loc < wordLen){
+        while(loc2 < wordLen){
 
             if(alphabetic(txt[l2])){
                 if(txt[l2] == inv_abword[loc2]){
