@@ -129,18 +129,27 @@ char atbashChar(char ch) {
     return ch;
 }
 
-void atbash(char word[]) {
-    int len = (int)strlen(word);
-    for (int i = 0; i < len; i++) {
+void atbash(char word[])
+{
+    int l = strlen(word), i = 0;
+    
+    while(i < l){
         word[i] = atbashChar(word[i]);
+        i++;
     }
+    word[i] = '\0';
 }
 
-void invertedAtbash(char word[]) {
-    int l = (int)strlen(word);
-    for (int i = 0; i < l; i++) {
-        word[l - 1 - i] = atbashChar(word[i]);
+void invertedAtbash(char word[])
+{
+    int l = strlen(word), i = 0;
+    
+    while(i < l){
+        word[l -1 - i] = atbashChar(word[i]);
+        i++;
     }
+    word[i] = '\0';
+    
 }
 
 void printAtbashEquals(char txt[], char word[]) {
@@ -149,11 +158,11 @@ void printAtbashEquals(char txt[], char word[]) {
         return;
     }
 
-    int i = 0, j = 0, len = strlen(txt);
+    int i = 0, j = 0, len = strlen(txt), l = strlen(word);;
 
     // get new word in atbash and its reverse
-    char abword[WORD];
-    char inv_abword[WORD];
+    char abword[l];
+    char inv_abword[l];
 
     strcpy(abword, word);
     strcpy(inv_abword, word);
