@@ -259,90 +259,38 @@ bool anagramEquals(char sorted[],char* sub, int len) {
             return false;
     return true;
 }
-
-void printAtbashEquals(char txt[], char word[]) {
-    printf("Atbash Sequences: ");
-    if (txt == NULL || txt[0] == '\0') {
-        return;
-    }
-
-    int txtLen = strlen(txt), wordLen = strlen(word);
-    int f = 0, f2 = 0, l = 0, l2 = 0, loc = 0, loc2 = 0;
-
-    // get new word in atbash and its reverse
-    char abword[wordLen];
-    char inv_abword[wordLen];
-
-    strcpy(abword, word);
-    strcpy(inv_abword, word);
-    atbash(abword);
-    invertedAtbash(inv_abword);
-    
-    bool flag2 = true;
-    bool flag = true; //for printing
-    bool first = true;
-
-    // scan the text and print any similar ones
-    while(l < txtLen){
-        f2 = f;  // --->  both inner loops should check the same word
-
-        l = f;
-        while(loc < wordLen){
-            
-            if(alphabetic(txt[l])){
-                if(txt[l] == abword[loc]){
-                    loc++;
-                }else{
-                    flag = false;
-                    break;
-                }
-            }
-                
+void printAnagramEquals(char txt[], char word[]) {
+    printf("Anagram Sequences: ");
+    bool flag = false;
+    int wordLen = strlen(word);
+    int len = strlen(txt);
+    char sortedWord[wordLen];
+    strcpy(sortedWord,word);
+    sort(sortedWord);
+    int count = 0;
+    int f = 0, l = 0;
+    while (l + wordLen <= len) {
+        while (count < wordLen) {
+            if(!isBlank(txt[l]))
+                count++;
             l++;
         }
-        if(flag){
-            if(! first){
-                printf("~");
-            }
-            
-            for (int k = f; k < l; k++) {
-                    printf("%c", txt[k]);
-                }
-                
-            first = false;
-        }
-
-        l2 = f2;
-        while(loc2 < wordLen){
-            
-            if(alphabetic(txt[l2])){
-                if(txt[l2] == inv_abword[loc2]){
-                    loc2++;
-                }else{
-                    flag2 = false;
-                    break;
+        if (count == wordLen) {
+            if (anagramEquals(sortedWord,&(txt[f]), l-f)) {
+                if (flag) {
+                    printf("~");
+                    for (int i = f; i < l; i++) {
+                        printf("%c", txt[i]);
+                    }
+                } else {
+                    for (int i = f; i < l; i++) {
+                        printf("%c", txt[i]);
+                    }
+                    flag = true;
                 }
             }
-                
-            l2++;
         }
-        if(flag2){
-            if(! first){
-                printf("~");
-            }
-            
-            for (int k = f2; k < l2; k++) {
-                    printf("%c", txt[k]);
-                }
-                
-            first = false;
-        }
-
+        count=0;
         f++;
-
-        loc2 = 0;
-        loc = 0;
-        flag = true;
-        flag2 = true;
+        l=f;
     }
-}
