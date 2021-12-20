@@ -188,7 +188,6 @@ void printAtbashEquals(char txt[], char word[]) {
                     flag = false;
                     break;
                 }
-                
             }
                 
             j++;

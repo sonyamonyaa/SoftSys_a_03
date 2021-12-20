@@ -13,9 +13,10 @@ int main() {
     printGematric(text);
     printf("\n");
 
-//    printf("Atbash Sequences: ");
-//    printAtbashEquals(text, word);
+    printf("Atbash Sequences: ");
+    printAtbashEquals(text, word);
     printf("\n");
+    
     printAnagramEquals(text, word);
 
     return 0;
