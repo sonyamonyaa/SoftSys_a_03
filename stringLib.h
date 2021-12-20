@@ -10,7 +10,7 @@
 //    #define LOW_Z 'z'
     void printGematric(char txt[]);
     void printAtbashEquals(char txt[], char word[]);
-    void printAnagramEquals(char txt[], int wordLen);
+    void printAnagramEquals(char txt[], char word[]);
     void inputWord(char* word);
     void inputTxt(char* text);
     

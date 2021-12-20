@@ -59,7 +59,6 @@ void inputTxt(char *text) {
 }
 
 static int sumWord = 0;
-static char *sortedWord;
 
 void inputWord(char *word) {
     // printf("please enter a word"); // will fuck up the tester so delete after dbg
@@ -75,10 +74,6 @@ void inputWord(char *word) {
         scanf("%c", &ch);
     }
     word[i] = '\0';
-    char temp[strlen(word)];
-    strcpy(temp, word);
-    sort(temp);
-    sortedWord = &temp;
 }
 
 
@@ -196,55 +191,60 @@ void printAtbashEquals(char txt[], char word[]) {
         i = j;
     }
 }
-//compares sorted strings regardless of empty characters
-bool compare(char w[], char t[]) {
+// anagram
+bool anagramEquals(char sorted[],char* sub, int len) {
+    // sort substring
+    char temp[len];
+    for(int i =0;i<len;i++)
+        temp[i] = *(sub+i);
+    sort(temp);
+
+    // if equals
     int j = 0;
-    while (isBlank(t[j]))
+    while (isBlank(temp[j]))
         j++;
-    int len = strlen(w);
-    for (int i = 0; i < len; i++)
-        if (w[i] != t[i + j])
+    int srLen = strlen(sorted);
+    for (int i = 0; i < srLen; i++)
+        if (sorted[i] != temp[i + j])
             return false;
     return true;
 }
-// anagram
-bool anagramEquals(char* s, int len) {
-    // sort both strings to temps
-    char temp[len];
-    for(int i =0;i<len;i++)
-        temp[i] = s[i];
-    sort(temp);
-    // if equals
-    return compare(sortedWord, temp);
-}
 
-void printAnagramEquals(char txt[], int wordLen) {
+void printAnagramEquals(char txt[], char word[]) {
     printf("Anagram Sequences: ");
     bool flag = false;
+    int wordLen = strlen(word);
+    int len = strlen(txt);
+
+    char sortedWord[wordLen];
+    strcpy(sortedWord,word);
+    sort(sortedWord);
+
     int count = 0;
     int f = 0, l = 0;
-    int len = strlen(txt);
-    while (f + l < len) {
-        while (isBlank(txt[l])) { l++; }
+
+    while (l + wordLen <= len) {
         while (count < wordLen) {
+            if(!isBlank(txt[l]))
+                count++;
             l++;
-            count++;
         }
         if (count == wordLen) {
-            if (anagramEquals(&(txt[f]), l + 1)) {
+            if (anagramEquals(sortedWord,&(txt[f]), l-f)) {
                 if (flag) {
                     printf("~");
-                    for (int i = f; i < l + 1; i++) {
+                    for (int i = f; i < l; i++) {
                         printf("%c", txt[i]);
                     }
                 } else {
-                    for (int i = f; i < l + 1; i++) {
+                    for (int i = f; i < l; i++) {
                         printf("%c", txt[i]);
                     }
                     flag = true;
                 }
             }
         }
+        count=0;
         f++;
         l=f;
     }

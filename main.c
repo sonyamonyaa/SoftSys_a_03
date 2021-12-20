@@ -12,10 +12,10 @@ int main() {
     //input
     inputWord(word);
     inputTxt(text);
-
     //print inputs
     // puts(word);
     // puts(text);
+    printf("\n");
     printf("%s\n", word);
     printf("%s", text);
     printf("\n");
@@ -24,7 +24,7 @@ int main() {
 //    printf("Atbash Sequences: ");
 //    printAtbashEquals(text, word);
 
-    printAnagramEquals(text, (int)strlen(word));
+    printAnagramEquals(text, word);
     printf("\n");
 //    works
 //    printGematric(text);
