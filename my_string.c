@@ -144,7 +144,7 @@ void invertedAtbash(char word[])
 {
     int l = strlen(word), i = 0;
     
-    char word2[l];
+    char word2[l];//char temp
     strcpy(word2, word);
     
     while(i < l){
@@ -156,55 +156,59 @@ void invertedAtbash(char word[])
 }
 
 void printAtbashEquals(char txt[], char word[]) {
-
+    printf("Atbash Sequences: ");
     if (txt == NULL || txt[0] == '\0') {
         return;
     }
-
-    int i = 0, j = 0, loc = 0, len = strlen(txt), l = strlen(word);
+    int f = 0, l = 0, loc = 0, txtLen = strlen(txt), wordLen = strlen(word);
 
     // get new word in atbash and its reverse
-    char abword[l];
-    char inv_abword[l];
+    char abword[wordLen];
+    char inv_abword[wordLen];
 
     strcpy(abword, word);
     strcpy(inv_abword, word);
     atbash(abword);
     invertedAtbash(inv_abword);
-
-    bool flag = true;
+    bool inv = false;
+    bool flag = false; //for printing
 
     // scan the text and print any similar ones
-    while(j < len){
-        
-        j = i;
-        while(loc < l){
+    while(l < txtLen){
+        l = f;
+        while(loc < wordLen){
             
-            if(alphabetic(txt[j])){
-                if(txt[j] == abword[loc]){
+            if(alphabetic(txt[l])){
+                if(txt[l] == abword[loc] && !inv){
+                    loc++;
+                }
+                else if(txt[l] == inv_abword[loc]){
+                    inv = true;
                     loc++;
                 }else{
-                    i = j;
-                    flag = false;
+                    f = l;
+                    inv = false;
                     break;
                 }
-                
             }
                 
-            j++;
+            l++;
         }
-        
-        if(flag){
-            
-            printf("%c", '~');
-            for (int k = i; k < j; k++) {
-                printf("%c", txt[k]);
+        if(loc==wordLen) {
+            if (!flag) {
+                for (int k = f; k < l; k++) {
+                    printf("%c", txt[k]);
+                }
+                flag = true;
+            } else {
+                printf("%c", '~');
+                for (int k = f; k < l; k++) {
+                    printf("%c", txt[k]);
+                }
             }
         }
-        
-        i++;
+        f++;
         loc = 0;
-        flag = true;
     }
 }
 // anagram

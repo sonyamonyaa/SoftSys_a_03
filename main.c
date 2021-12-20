@@ -13,8 +13,7 @@ int main() {
     printGematric(text);
     printf("\n");
 
-//    printf("Atbash Sequences: ");
-//    printAtbashEquals(text, word);
+    printAtbashEquals(text, word);
     printf("\n");
     printAnagramEquals(text, word);
 
