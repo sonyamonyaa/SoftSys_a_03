@@ -8,10 +8,10 @@
 //    #define UP_Z 'Z'
 //    #define LOW_A 'a'
 //    #define LOW_Z 'z'
-    void printGimatric(char *txt, char *word);
+    void printGematric(char txt[]);
     // bool gimatricEquals(char* s1, char* s2);
-    void printAtbashEquals(char *txt, char *word);
-    bool anagramEquals(char* s1, char* s2);
+    //void printAtbashEquals(char txt[], char word[]);
+    //bool anagramEquals(char* s1, char* s2);
     void inputWord(char* word);
     void inputTxt(char* text);
     

@@ -19,13 +19,14 @@ int main()
     // puts(text);
     printf("%s\n",word);
     printf("%s",text);
+    printf("\n");
 
     //program stuff
-    printf("Atbash Sequences: ");
+    //printf("Atbash Sequences: ");
     //printAtbashEquals(text, word);
     printf("\n");
 
-    printGimatric(text,word);
+    printGematric(text);
     printf("\n");
 
     
