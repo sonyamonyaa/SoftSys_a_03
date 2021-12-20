@@ -10,11 +10,11 @@ int main() {
     inputTxt(text);
 
     //program stuff
-//    printGematric(text);
+    printGematric(text);
     printf("\n");
     printAtbashEquals(text, word);
     printf("\n");
-//    printAnagramEquals(text, word);
+    printAnagramEquals(text, word);
 
     return 0;
 }
