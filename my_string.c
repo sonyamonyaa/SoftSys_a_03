@@ -117,6 +117,7 @@ void printGematric(char txt[]) {
                 break;
             }
         }
+        l++;
     }
 }
 
@@ -199,7 +200,10 @@ void printAtbashEquals(char txt[], char word[]) {
             if(! first){
                 printf("~");
             }
-
+            while (!alphabetic(txt[f]))
+                f++;
+            while (!alphabetic(txt[l]))
+                l--;
             for (int k = f; k < l; k++) {
                 printf("%c", txt[k]);
             }
@@ -225,7 +229,10 @@ void printAtbashEquals(char txt[], char word[]) {
             if(! first){
                 printf("~");
             }
-
+            while (!alphabetic(txt[f2]))
+                f2++;
+            while (!alphabetic(txt[l2]))
+                l2--;
             for (int k = f2; k < l2; k++) {
                 printf("%c", txt[k]);
             }
@@ -279,13 +286,17 @@ void printAnagramEquals(char txt[], char word[]) {
         }
         if (count == wordLen) {
             if (anagramEquals(sortedWord, &(txt[f]), l - f)) {
+                while (!alphabetic(txt[f]))
+                    f++;
+                while (!alphabetic(txt[l]))
+                    l--;
                 if (flag) {
                     printf("~");
-                    for (int i = f; i < l; i++) {
+                    for (int i = f; i < l+1; i++) {
                         printf("%c", txt[i]);
                     }
                 } else {
-                    for (int i = f; i < l; i++) {
+                    for (int i = f; i < l+1; i++) {
                         printf("%c", txt[i]);
                     }
                     flag = true;
