@@ -144,8 +144,11 @@ void invertedAtbash(char word[])
 {
     int l = strlen(word), i = 0;
     
+    char word2[l];
+    strcpy(word2, word);
+    
     while(i < l){
-        word[l -1 - i] = atbashChar(word[i]);
+        word[l -1 - i] = atbashChar(word2[i]);
         i++;
     }
     word[i] = '\0';
