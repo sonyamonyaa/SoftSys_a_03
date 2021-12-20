@@ -247,8 +247,10 @@ void printAtbashEquals(char txt[], char word[]) {
     strcpy(inv_abword, word);
     atbash(abword);
     invertedAtbash(inv_abword);
+    
     bool flag2 = true;
     bool flag = true; //for printing
+    bool first = true;
 
     // scan the text and print any similar ones
     while(l < txtLen){
@@ -269,11 +271,15 @@ void printAtbashEquals(char txt[], char word[]) {
             l++;
         }
         if(flag){
+            if(! first){
+                printf("~");
+            }
+            
             for (int k = f; k < l; k++) {
                     printf("%c", txt[k]);
                 }
                 
-            printf("~");
+            first = false;
         }
 
         l2 = f2;
@@ -291,11 +297,15 @@ void printAtbashEquals(char txt[], char word[]) {
             l2++;
         }
         if(flag2){
+            if(! first){
+                printf("~");
+            }
+            
             for (int k = f2; k < l2; k++) {
                     printf("%c", txt[k]);
                 }
                 
-            printf("~");
+            first = false;
         }
 
         f++;
