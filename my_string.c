@@ -124,6 +124,28 @@ char atbashChar(char ch) {
     return ch;
 }
 
+void atbash(char word[]) {
+    int len = strlen(word);
+    for (int i = 0; i < len; i++) {
+        word[i] = atbashChar(word[i]);
+    }
+}
+
+void invertedAtbash(char word[]) {
+    int l = strlen(word);
+    for (short i = 0; i < l; i++) {
+        word[l - 1 - i] = atbashChar(word[i]);
+    }
+}
+
+void printAtbashEquals(char txt[], char word[]) {
+
+    if (txt == NULL || txt[0] == '\0') {
+        return;
+    }
+
+    int i = 0, j = 0, len = strlen(txt);
+
     // get new word in atbash and its reverse
     char abword[WORD];
     char inv_abword[WORD];
@@ -152,6 +174,18 @@ char atbashChar(char ch) {
                 j++;
             }
         }
+        if (i != j) {
+            if (flag)
+                printf("%c", '~');
+            for (int k = i; k <= j; k++) {
+                printf("%c", txt[k]);
+            }
+            if (!flag)
+                flag = true;
+        }
+        i = j;
+    }
+}
 
 // anagram
 bool isSorted = false;
