@@ -161,7 +161,7 @@ void printAtbashEquals(char txt[], char word[]) {
         return;
     }
 
-    int i = 0, j = 0, len = strlen(txt), l = strlen(word);;
+    int i = 0, j = 0, loc = 0, len = strlen(txt), l = strlen(word);
 
     // get new word in atbash and its reverse
     char abword[l];
@@ -172,35 +172,39 @@ void printAtbashEquals(char txt[], char word[]) {
     atbash(abword);
     invertedAtbash(inv_abword);
 
-    int wl = strlen(abword);
-    bool flag = false;
+    bool flag = true;
 
     // scan the text and print any similar ones
-    while (j < len) {
-        int currl = 0;
-        while (currl != wl) {
-            if (alphabetic(txt[j])) {
-                if (txt[j] == abword[currl]) {
-                    j++;
-                    currl++;
-                } else {
+    while(j < len){
+        
+        j = i;
+        while(loc < l){
+            
+            if(alphabetic(txt[j])){
+                if(txt[j] == abword[loc]){
+                    loc++;
+                }else{
                     i = j;
+                    flag = false;
                     break;
                 }
-            } else {
-                j++;
+                
             }
+                
+            j++;
         }
-        if (i != j) {
-            if (flag)
-                printf("%c", '~');
-            for (int k = i; k <= j; k++) {
+        
+        if(flag){
+            
+            printf("%c", '~');
+            for (int k = i; k < j; k++) {
                 printf("%c", txt[k]);
             }
-            if (!flag)
-                flag = true;
         }
-        i = j;
+        
+        i++;
+        loc = 0;
+        flag = true;
     }
 }
 // anagram
