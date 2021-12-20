@@ -88,28 +88,22 @@ char atbashChar(char ch)
     return ch;
 }
 
-char* abtash(char* word){
+void abtash(char* word, char* ans){
     int l = strlen(word);
-    char ans[l];
 
-    for (short i = 0; i < word; i++)
+    for (short i = 0; i < l; i++)
     {
         ans[i] = atbashChar(word[i]);
-    }
-
-    return &ans[0];    
+    }    
 }
 
-char* invertedAbatash(char* word){
+void invertedAbatash(char* word, char* ans){
     int l = strlen(word);
-    char ans[l];
 
-    for (short i = 0; i < word; i++)
+    for (short i = 0; i < l; i++)
     {
         ans[l-1 -i] = atbashChar(word[i]);
     }
-
-    return &ans[0];    
 }
 
 void printAbatashEquals(char *txt, char *word)
@@ -122,7 +116,10 @@ void printAbatashEquals(char *txt, char *word)
     if (txt == NULL || txt[0] == '\0'){return;}
 
     int i = 0, j = 0, l = strlen(txt);
-    char* abword = abtash(word), inv_abword = invertedAbatash(word);
+    char abword[strlen(word)];
+    char inv_abword[strlen(word)];
+    abtash(word, abword);
+    invertedAbatash(word, inv_abword);
     int wl = strlen(abword);
 
     while (j < l)
@@ -141,6 +138,7 @@ void printAbatashEquals(char *txt, char *word)
                 j++;
             }
         }
+
         if (i != j){ 
             for (short k = i; k <= j; k++)
             {
@@ -148,7 +146,7 @@ void printAbatashEquals(char *txt, char *word)
             }
             printf("%c", '~');
         }
-
+        
         i = j;
     }
 }
