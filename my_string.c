@@ -249,5 +249,3 @@ void printAnagramEquals(char txt[], char word[]) {
         l=f;
     }
 }
-
-
