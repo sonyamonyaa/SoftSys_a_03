@@ -15,6 +15,7 @@ int main()
     inputWord(word);
 
     //program stuff
+    
 
 
     
