@@ -4,30 +4,35 @@
 #include <stdbool.h>
 //#include <stdlib.h>
 
-int alphabetic(char ch) {
+//checks if char is alphabetic
+bool alphabetic(char ch) {
     return (ch <= 'Z' && ch >= 'A') || (ch <= 'z' && ch >= 'a');
 }
 
-//char *substring(char *string, int position, int length)
-//{
-//    char *p;
-//    int c;
-//    p = malloc(length + 1);
-//    if (p == NULL)
-//    {
-//        printf("Unable to allocate memory.\n");
-//        exit(1);
-//    }
-//    for (c = 0; c < length; c++)
-//    {
-//        *(p + c) = *(string + position - 1);
-//        string++;
-//    }
-//    *(p + c) = '\0';
-//    return p;
-//}
+bool isBlank(char ch) {
+    return (ch == ' ' || ch == '\n' || ch == '\t');
+}
 
-int gimatricVal(char ch) {
+//this function sorts and converts to smaller case a given str
+void sort(char s[]) {
+    int temp, k, l;
+    for (int i = 0; i < strlen(s); i++) {
+        if (s[i] >= 'A' && s[i] <= 'Z')
+            s[i] = s[i] + 32;
+    }
+    for (k = 0; k < strlen(s) - 1; k++) {
+        for (l = k + 1; l < strlen(s); l++) {
+            if (s[k] > s[l]) {
+                temp = s[k];
+                s[k] = s[l];
+                s[l] = temp;
+            }
+        }
+    }
+}
+
+//gematric value of a char
+int gematricVal(char ch) {
     int val = 0;
     if (ch >= 'a' && ch <= 'z') {
         val = ch - 'a' + 1;
@@ -62,10 +67,10 @@ void inputWord(char *word) {
     char ch;
     scanf("%c", &ch);
 
-    while ((ch != '\n' && ch != ' ' && ch != '\t') && i < WORD - 1) {
+    while ((!isBlank(ch)) && i < WORD - 1) {
         word[i] = ch;
         i++;
-        sumWord += gimatricVal(ch);
+        sumWord += gematricVal(ch);
         scanf("%c", &ch);
     }
     word[i] = '\0';
@@ -75,20 +80,20 @@ void inputWord(char *word) {
 void printGematric(char txt[]) {
     printf("Gematria Sequences: ");
     int sum = 0; //, i = 0;
-    int f = 0, l=0;
-    int len = (int)strlen(txt);
+    int f = 0, l = 0;
+    int len = (int) strlen(txt);
     //char ans[TXT] = "";
     bool flag = false;
     while (f < len) {
-        sum += gimatricVal(txt[l]);
-        f=l;
+        sum += gematricVal(txt[l]);
+        f = l;
         while (l < len) {
             if (sum < sumWord) {
                 l++;
-                sum += gimatricVal(txt[l]);
+                sum += gematricVal(txt[l]);
             }
             if (sum > sumWord) {
-                sum -= gimatricVal(txt[f]);
+                sum -= gematricVal(txt[f]);
                 f++;
             }
             if (sum == sumWord) {
@@ -125,15 +130,15 @@ char atbashChar(char ch) {
 }
 
 void atbash(char word[]) {
-    int len = strlen(word);
+    int len = (int)strlen(word);
     for (int i = 0; i < len; i++) {
         word[i] = atbashChar(word[i]);
     }
 }
 
 void invertedAtbash(char word[]) {
-    int l = strlen(word);
-    for (short i = 0; i < l; i++) {
+    int l = (int)strlen(word);
+    for (int i = 0; i < l; i++) {
         word[l - 1 - i] = atbashChar(word[i]);
     }
 }
@@ -186,39 +191,61 @@ void printAtbashEquals(char txt[], char word[]) {
         i = j;
     }
 }
-
 // anagram
-bool isSorted = false;
-char *sortedWord;
-//this function sorts and converts to smaller case a given str
-void sort(char s[]) {
-    int temp, k, l;
-    for (k = 0; k < strlen(s) - 1; k++) {
-        if (s[k] >= 'A' && s[k] <= 'Z')
-            s[k] = s[k] - 'A' + 'a';
-        for (l = k + 1; l < strlen(s); l++) {
-            if (s[l] >= 'A' && s[l] <= 'Z')
-                s[k] = s[k] - 'A' + 'a';
-            if (s[k] > s[l]) {
-                temp = s[k];
-                s[k] = s[l];
-                s[l] = temp;
-            }
-        }
-    }
-}
-
-bool anagramEquals(char *s1, char *s2) {
-    // sort both strings to temps
-    if (!isSorted) {
-        strcpy(sortedWord, s1);
-        sort(sortedWord);
-        isSorted = true;
-    }
-    char temp[sizeof(s2)];
-    strcpy(temp, s2);
+bool anagramEquals(char sorted[],char* sub, int len) {
+    // sort substring
+    char temp[len];
+    for(int i =0;i<len;i++)
+        temp[i] = *(sub+i);
     sort(temp);
 
     // if equals
-    return strcmp(sortedWord, temp) == 0;
+    int j = 0;
+    while (isBlank(temp[j]))
+        j++;
+    int srLen = strlen(sorted);
+    for (int i = 0; i < srLen; i++)
+        if (sorted[i] != temp[i + j])
+            return false;
+    return true;
+}
+
+void printAnagramEquals(char txt[], char word[]) {
+    printf("Anagram Sequences: ");
+    bool flag = false;
+    int wordLen = strlen(word);
+    int len = strlen(txt);
+
+    char sortedWord[wordLen];
+    strcpy(sortedWord,word);
+    sort(sortedWord);
+
+    int count = 0;
+    int f = 0, l = 0;
+
+    while (l + wordLen <= len) {
+        while (count < wordLen) {
+            if(!isBlank(txt[l]))
+                count++;
+            l++;
+        }
+        if (count == wordLen) {
+            if (anagramEquals(sortedWord,&(txt[f]), l-f)) {
+                if (flag) {
+                    printf("~");
+                    for (int i = f; i < l; i++) {
+                        printf("%c", txt[i]);
+                    }
+                } else {
+                    for (int i = f; i < l; i++) {
+                        printf("%c", txt[i]);
+                    }
+                    flag = true;
+                }
+            }
+        }
+        count=0;
+        f++;
+        l=f;
+    }
 }
