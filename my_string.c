@@ -172,8 +172,10 @@ void printAtbashEquals(char txt[], char word[]) {
     strcpy(inv_abword, word);
     atbash(abword);
     invertedAtbash(inv_abword);
+    
     bool flag2 = true;
-    bool flag1 = true;
+    bool flag = true; //for printing
+    bool first = true;
 
     // scan the text and print any similar ones
     while(l < txtLen){
@@ -181,51 +183,61 @@ void printAtbashEquals(char txt[], char word[]) {
 
         l = f;
         while(loc < wordLen){
-
+            
             if(alphabetic(txt[l])){
                 if(txt[l] == abword[loc]){
                     loc++;
                 }else{
-                    f = l;
-                    flag1 = false;
+                    flag = false;
                     break;
                 }
             }
-
+                
             l++;
         }
-        if(flag1){
-            for (int k = f; k < l; k++) {
-                printf("%c", txt[k]);
+        if(flag){
+            if(! first){
+                printf("~");
             }
+            
+            for (int k = f; k < l; k++) {
+                    printf("%c", txt[k]);
+                }
+                
+            first = false;
         }
 
         l2 = f2;
         while(loc2 < wordLen){
-
+            
             if(alphabetic(txt[l2])){
                 if(txt[l2] == inv_abword[loc2]){
                     loc2++;
                 }else{
-                    f2 = l2;
                     flag2 = false;
                     break;
                 }
             }
-
+                
             l2++;
         }
         if(flag2){
-            for (int k = f2; k < l2; k++) {
-                printf("%c", txt[k]);
+            if(! first){
+                printf("~");
             }
+            
+            for (int k = f2; k < l2; k++) {
+                    printf("%c", txt[k]);
+                }
+                
+            first = false;
         }
 
         f++;
 
         loc2 = 0;
         loc = 0;
-        flag1 = true;
+        flag = true;
         flag2 = true;
     }
 }
