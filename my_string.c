@@ -160,7 +160,9 @@ void printAtbashEquals(char txt[], char word[]) {
     if (txt == NULL || txt[0] == '\0') {
         return;
     }
-    int f = 0, l = 0, loc = 0, txtLen = strlen(txt), wordLen = strlen(word);
+
+    int txtLen = strlen(txt), wordLen = strlen(word);
+    int f = 0, f2 = 0, l = 0, l2 = 0, loc = 0, loc2 = 0;
 
     // get new word in atbash and its reverse
     char abword[wordLen];
@@ -170,45 +172,61 @@ void printAtbashEquals(char txt[], char word[]) {
     strcpy(inv_abword, word);
     atbash(abword);
     invertedAtbash(inv_abword);
-    bool inv = false;
-    bool flag = false; //for printing
+    bool flag2 = true;
+    bool flag1 = true;
 
     // scan the text and print any similar ones
     while(l < txtLen){
+        f2 = f;  // --->  both inner loops should check the same word
+
         l = f;
         while(loc < wordLen){
-            
+
             if(alphabetic(txt[l])){
-                if(txt[l] == abword[loc] && !inv){
-                    loc++;
-                }
-                else if(txt[l] == inv_abword[loc]){
-                    inv = true;
+                if(txt[l] == abword[loc]){
                     loc++;
                 }else{
                     f = l;
-                    inv = false;
+                    flag1 = false;
                     break;
                 }
             }
-                
+
             l++;
         }
-        if(loc==wordLen) {
-            if (!flag) {
-                for (int k = f; k < l; k++) {
-                    printf("%c", txt[k]);
-                }
-                flag = true;
-            } else {
-                printf("%c", '~');
-                for (int k = f; k < l; k++) {
-                    printf("%c", txt[k]);
-                }
+        if(flag1){
+            for (int k = f; k < l; k++) {
+                printf("%c", txt[k]);
             }
         }
+
+        l2 = f2;
+        while(loc < wordLen){
+
+            if(alphabetic(txt[l2])){
+                if(txt[l2] == inv_abword[loc2]){
+                    loc2++;
+                }else{
+                    f2 = l2;
+                    flag2 = false;
+                    break;
+                }
+            }
+
+            l2++;
+        }
+        if(flag2){
+            for (int k = f2; k < l2; k++) {
+                printf("%c", txt[k]);
+            }
+        }
+
         f++;
+
+        loc2 = 0;
         loc = 0;
+        flag1 = true;
+        flag2 = true;
     }
 }
 // anagram
