@@ -265,18 +265,18 @@ void printAnagramEquals(char txt[], char word[]) {
     int wordLen = strlen(word);
     int len = strlen(txt);
     char sortedWord[wordLen];
-    strcpy(sortedWord,word);
+    strcpy(sortedWord, word);
     sort(sortedWord);
     int count = 0;
     int f = 0, l = 0;
     while (l + wordLen <= len) {
         while (count < wordLen) {
-            if(!isBlank(txt[l]))
+            if (!isBlank(txt[l]))
                 count++;
             l++;
         }
         if (count == wordLen) {
-            if (anagramEquals(sortedWord,&(txt[f]), l-f)) {
+            if (anagramEquals(sortedWord, &(txt[f]), l - f)) {
                 if (flag) {
                     printf("~");
                     for (int i = f; i < l; i++) {
@@ -290,7 +290,8 @@ void printAnagramEquals(char txt[], char word[]) {
                 }
             }
         }
-        count=0;
+        count = 0;
         f++;
-        l=f;
+        l = f;
     }
+}
